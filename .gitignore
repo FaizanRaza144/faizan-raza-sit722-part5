@@ -1,4 +1,4 @@
-# Ignore Terraform provider binaries and state files
+# Ignore Terraform directories and state files
 .terraform/
 terraform.tfstate
 terraform.tfstate.backup
@@ -10,3 +10,6 @@ terraform.tfstate.backup
 __pycache__/
 *.pyc
 *.pyo
+
+# Ignore system files
+.DS_Store
