@@ -42,6 +42,9 @@ jobs:
       run: |
         az aks get-credentials --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --name ${{ secrets.AK_CLUSTER_NAME }}
         kubectl version --client
-
+    # Make deploy.sh executable
+    - name: Make deploy.sh executable
+      run: chmod +x ./scripts/deploy.sh
+      
     - name: Deploy to AKS
       run: ./scripts/deploy.sh
