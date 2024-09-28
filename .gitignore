@@ -1,5 +1,7 @@
-# Ignore Terraform directories and files
+# Ignore Terraform state and provider files
 .terraform/
 terraform.tfstate
 terraform.tfstate.backup
 
+# Ignore executable files
+*.exe
