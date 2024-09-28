@@ -25,6 +25,10 @@ jobs:
     - name: Log in to ACR
       run: az acr login --name ${{ secrets.ACR_NAME }}
 
+  # Add this step to set executable permissions for the build script
+    - name: Make build-image.sh executable
+      run: chmod +x ./scripts/build-image.sh
+      
     - name: Build and Push Docker image
       run: ./scripts/build-image.sh
 
