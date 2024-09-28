@@ -1,16 +1,9 @@
-name: Deploy microservice
-
-on:
-  push:
-    branches:
-      - main
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     env:
-      VERSION: ${{ github.sha }}  # Use the GitHub commit hash for versioning
+      VERSION: ${{ github.sha }}
       CONTAINER_REGISTRY: ${{ secrets.CONTAINER_REGISTRY }}
 
     steps:
@@ -24,6 +17,10 @@ jobs:
 
     - name: Log in to ACR
       run: az acr login --name ${{ secrets.ACR_NAME }}
+
+    # Add this step to make the script executable
+    - name: Make build-image.sh executable
+      run: chmod +x ./scripts/build-image.sh
 
     - name: Build and Push Docker image
       run: ./scripts/build-image.sh
