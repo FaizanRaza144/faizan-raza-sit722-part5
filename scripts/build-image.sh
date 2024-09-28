@@ -14,10 +14,12 @@
 #
 
 set -u # Exit the script if any variables are undefined
-set -x  # Enable debug mode
+
 # Ensure that the necessary environment variables are set
 : "${CONTAINER_REGISTRY:?Environment variable CONTAINER_REGISTRY is required}"
 : "${VERSION:?Environment variable VERSION is required}"
 
-
+# Build the Docker image
+docker build -t "$CONTAINER_REGISTRY/book_catalog:$VERSION" --file ./book_catalog/Dockerfile .
+docker build -t "$CONTAINER_REGISTRY/inventory_management:$VERSION" --file ./inventory_management/Dockerfile .
 docker-compose -f docker-compose.yml build
