@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: book-inventory-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: book-inventory-app
+  template:
+    metadata:
+      labels:
+        app: book-inventory-app
+    spec:
+      containers:
+      - name: book-catalog
+        image: microservice12.azurecr.io/part4-book_catalog:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: DATABASE_URL
+          value: "postgresql://postgresadmin%40my-db2236:Password123%21@my-db2236.postgres.database.azure.com:5432/mydatabase"
+      - name: inventory-management
+        image: microservice12.azurecr.io/part4-inventory_management:latest
+        ports:
+        - containerPort: 81
+        env:
+        - name: DATABASE_URL
+          value: "postgresql://postgresadmin%40my-db2236:Password123%21@my-db2236.postgres.database.azure.com:5432/mydatabase"
+        command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "81"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: book-inventory-service
+spec:
+  selector:
+    app: book-inventory-app
+  ports:
+    - name: book-catalog
+      protocol: TCP
+      port: 80
+      targetPort: 80
+    - name: inventory-management
+      protocol: TCP
+      port: 81
+      targetPort: 81
+  type: LoadBalancer

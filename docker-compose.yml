@@ -1,0 +1,23 @@
+version: '3'
+services:
+  inventory_management:
+    build: ./inventory_management
+    ports:
+      - "8000:8000"  # Expose inventory_management on external port 8000
+    environment:
+      - DATABASE_URL=postgresql://postgresadmin:Password123!@my-db2236.postgres.database.azure.com:5432/mydatabase
+    networks:
+      - app-network
+
+  book_catalog:
+    build: ./book_catalog
+    ports:
+      - "8001:8000"  # Expose book_catalog on external port 8001
+    environment:
+      - DATABASE_URL=postgresql://postgresadmin:Password123!@my-db2236.postgres.database.azure.com:5432/mydatabase
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
