@@ -1,7 +1,12 @@
-# Ignore Terraform state and provider files
+# Ignore Terraform provider binaries and state files
 .terraform/
 terraform.tfstate
 terraform.tfstate.backup
 
-# Ignore executable files
+# Ignore large executable files
 *.exe
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
